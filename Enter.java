@@ -11,6 +11,7 @@ package com.mycompany.chat;
 import java.io.*;
 import java.net.*;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 public class Enter extends javax.swing.JFrame {
 
     /**
@@ -183,7 +184,9 @@ public class Enter extends javax.swing.JFrame {
             boolean d = (this.dark == false);
             this.inter = new Interface(this.socket, this.ipText.getText(), Integer.parseInt(portText.getText()), this.nome, this.buffR, this.buffW, d);
             this.inter.setVisible(true);
-        }catch(IOException e){}
+        }catch(IOException e){
+        JOptionPane.showMessageDialog(null, "Servidor não Existe", "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_enterBtnActionPerformed
 
     private void darkModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_darkModeActionPerformed
