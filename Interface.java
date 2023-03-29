@@ -11,6 +11,7 @@ package com.mycompany.chat;
 import java.io.*;
 import java.net.*;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 public class Interface extends javax.swing.JFrame {
 
     /**
@@ -158,6 +159,7 @@ public class Interface extends javax.swing.JFrame {
             Interface.textArea.setText(Interface.textArea.getText() + "Você: " + line + "\n");
         } catch (IOException e){
             //fechaCliente(, buffR, buffW);
+            JOptionPane.showMessageDialog(null, "Impossivel conectar ao servidor", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
         
     }//GEN-LAST:event_sendActionPerformed
