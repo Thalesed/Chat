@@ -25,8 +25,8 @@ public class Recebedor implements Runnable {
      while (s.hasNextLine()) {
          String line  = s.nextLine();
        System.out.println(line);
-       Interface.textArea.setLineWrap(rootPaneCheckingEnabled);
-       Interface.textArea.setWrapStyleWord(rootPaneCheckingEnabled);
+       //Interface.textArea.setLineWrap(rootPaneCheckingEnabled);
+       //Interface.textArea.setWrapStyleWord(rootPaneCheckingEnabled);
        Interface.textArea.setText(Interface.textArea.getText() + line + "\n");
      }
    }
