@@ -1,0 +1,2 @@
+            Interface.textArea.setLineWrap(rootPaneCheckingEnabled);
+            Interface.textArea.setWrapStyleWord(rootPaneCheckingEnabled);
