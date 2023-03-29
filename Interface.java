@@ -10,6 +10,7 @@ package com.mycompany.chat;
  */
 import java.io.*;
 import java.net.*;
+import java.awt.Color;
 public class Interface extends javax.swing.JFrame {
 
     /**
@@ -21,13 +22,16 @@ public class Interface extends javax.swing.JFrame {
     private String nome;
     private static String ip;
     private static int port;
-    public Interface(Socket cliente, String ip, int port, String nome, BufferedReader buffR, BufferedWriter buffW) {
+    
+    public Interface(Socket cliente, String ip, int port, String nome, BufferedReader buffR, BufferedWriter buffW, boolean dark) {
         Interface.ip = ip;
         Interface.port = port;
         this.nome = nome;
         this.buffR = buffR;
         this.buffW = buffW;
         initComponents();
+        getRootPane().setDefaultButton(this.send);
+        this.darkM(dark);
         Interface.ipLabel.setText(Interface.ipLabel.getText() + Interface.ip);
         Interface.portLabel.setText(Interface.portLabel.getText() + Interface.port);
         try{
@@ -57,28 +61,38 @@ public class Interface extends javax.swing.JFrame {
         send = new javax.swing.JButton();
         msg = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(java.awt.Color.darkGray);
 
         textArea.setEditable(false);
         textArea.setColumns(20);
         textArea.setRows(5);
         jScrollPane1.setViewportView(textArea);
 
+        ipLabel.setForeground(new java.awt.Color(204, 204, 204));
         ipLabel.setText("ip:");
 
+        portLabel.setForeground(new java.awt.Color(204, 204, 204));
         portLabel.setText("port:");
 
         jLabel1.setFont(new java.awt.Font("TlwgTypewriter", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
         jLabel1.setText("Chat Online");
 
         send.setBackground(new java.awt.Color(51, 153, 255));
+        send.setFont(new java.awt.Font("Abyssinica SIL", 0, 18)); // NOI18N
         send.setText("Send");
         send.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sendActionPerformed(evt);
             }
         });
+        send.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                sendKeyPressed(evt);
+            }
+        });
 
+        msg.setFont(new java.awt.Font("Purisa", 0, 15)); // NOI18N
         msg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 msgActionPerformed(evt);
@@ -92,12 +106,11 @@ public class Interface extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(115, 115, 115)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ipLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(portLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                    .addComponent(portLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16))
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,7 +121,7 @@ public class Interface extends javax.swing.JFrame {
                         .addGap(19, 19, 19))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(36, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,15 +130,17 @@ public class Interface extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(ipLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(portLabel))
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(12, 12, 12)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(send)
-                    .addComponent(msg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(msg)
+                        .addGap(4, 4, 4)))
                 .addGap(14, 14, 14))
         );
 
@@ -140,7 +155,7 @@ public class Interface extends javax.swing.JFrame {
             buffW.newLine();
             buffW.flush();
             this.msg.setText("");
-            Interface.textArea.setText(Interface.textArea.getText() + line + "\n");
+            Interface.textArea.setText(Interface.textArea.getText() + "Você: " + line + "\n");
         } catch (IOException e){
             //fechaCliente(, buffR, buffW);
         }
@@ -151,9 +166,30 @@ public class Interface extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_msgActionPerformed
 
+    private void sendKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_sendKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sendKeyPressed
+
     /**
      * @param args the command line arguments
      */
+    public void darkM(boolean dark){
+        Color corDeFundo;
+        if(dark == false){
+            corDeFundo = new Color(0, 0, 0);
+            getContentPane().setBackground(corDeFundo);
+            this.jLabel1.setForeground(new Color(208, 208, 208));
+            Interface.ipLabel.setForeground(new Color(208, 208, 208));
+            Interface.portLabel.setForeground(new Color(208, 208, 208));
+        }else {
+            corDeFundo = new Color(240, 240, 240);
+            getContentPane().setBackground(corDeFundo);
+            this.jLabel1.setForeground(new Color(0, 0, 0));
+            Interface.ipLabel.setForeground(new Color(0, 0, 0));
+            Interface.portLabel.setForeground(new Color(0, 0, 0));
+        }
+    }
+    
     private void esperaLine() {
         new Thread(new Runnable(){
             @Override

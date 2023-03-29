@@ -10,6 +10,7 @@ package com.mycompany.chat;
  */
 import java.io.*;
 import java.net.*;
+import java.awt.Color;
 public class Enter extends javax.swing.JFrame {
 
     /**
@@ -18,9 +19,19 @@ public class Enter extends javax.swing.JFrame {
     private Socket socket;
     private BufferedReader buffR;
     private BufferedWriter buffW;
-     private String nome;
+    private String nome;
+    private boolean dark = false;
+    private boolean entrou = false;
+    Interface inter;
     public Enter() {
         initComponents();
+        getRootPane().setDefaultButton(this.enterBtn);
+        Color corDeFundo = new Color(240, 240, 240);
+        getContentPane().setBackground(corDeFundo);
+        this.jLabel1.setForeground(new Color(0, 0, 0));
+        this.jLabel2.setForeground(new Color(0, 0, 0));
+        this.jLabel3.setForeground(new Color(0, 0, 0));
+        this.jLabel4.setForeground(new Color(0, 0, 0));
     }
 
     /**
@@ -42,14 +53,18 @@ public class Enter extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         enterBtn = new javax.swing.JButton();
+        darkMode = new javax.swing.JButton();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(javax.swing.UIManager.getDefaults().getColor("Button.selectedForeground"));
+        setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel1.setFont(new java.awt.Font("TlwgTypewriter", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
         jLabel1.setText("Chat Online");
 
         ipText.setText("127.0.0.1");
@@ -61,17 +76,20 @@ public class Enter extends javax.swing.JFrame {
             }
         });
 
-        name.setText("User");
+        name.setText("user");
         name.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nameActionPerformed(evt);
             }
         });
 
+        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
         jLabel2.setText("IP:");
 
+        jLabel3.setForeground(new java.awt.Color(204, 204, 204));
         jLabel3.setText("Port:");
 
+        jLabel4.setForeground(new java.awt.Color(204, 204, 204));
         jLabel4.setText("Nome:");
 
         enterBtn.setBackground(new java.awt.Color(51, 153, 255));
@@ -82,41 +100,50 @@ public class Enter extends javax.swing.JFrame {
             }
         });
 
+        darkMode.setFont(new java.awt.Font("Liberation Sans", 0, 8)); // NOI18N
+        darkMode.setText("DM");
+        darkMode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                darkModeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(ipText, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(portText, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(20, 20, 20)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(enterBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(137, Short.MAX_VALUE))
+                        .addGap(80, 80, 80)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(ipText, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(portText, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(darkMode, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(49, 49, 49)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(156, 156, 156)
+                        .addComponent(enterBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(darkMode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ipText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -129,9 +156,9 @@ public class Enter extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(27, 27, 27)
                 .addComponent(enterBtn)
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
         pack();
@@ -149,13 +176,41 @@ public class Enter extends javax.swing.JFrame {
         // TODO add your handling code here:
         try{
             this.socket = new Socket(ipText.getText(), Integer.parseInt(portText.getText()));
+            this.entrou = true;
             this.buffW = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
             this.buffR = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
             this.nome = this.name.getText();
-            Interface inter = new Interface(this.socket, this.ipText.getText(), Integer.parseInt(portText.getText()), this.nome, this.buffR, this.buffW);
-            inter.setVisible(true);
+            boolean d = (this.dark == false);
+            this.inter = new Interface(this.socket, this.ipText.getText(), Integer.parseInt(portText.getText()), this.nome, this.buffR, this.buffW, d);
+            this.inter.setVisible(true);
         }catch(IOException e){}
     }//GEN-LAST:event_enterBtnActionPerformed
+
+    private void darkModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_darkModeActionPerformed
+        // TODO add your handling code here:
+        if(entrou){
+            this.inter.darkM(this.dark);
+        }
+        Color corDeFundo;
+        if(this.dark == false){
+            corDeFundo = new Color(0, 0, 0);
+            getContentPane().setBackground(corDeFundo);
+            this.dark = true;
+            this.jLabel1.setForeground(new Color(208, 208, 208));
+            this.jLabel2.setForeground(new Color(208, 208, 208));
+            this.jLabel3.setForeground(new Color(208, 208, 208));
+            this.jLabel4.setForeground(new Color(208,208,208));
+        }else {
+            corDeFundo = new Color(240, 240, 240);
+            getContentPane().setBackground(corDeFundo);
+            this.jLabel1.setForeground(new Color(0, 0, 0));
+            this.jLabel2.setForeground(new Color(0, 0, 0));
+            this.jLabel3.setForeground(new Color(0, 0, 0));
+            this.jLabel4.setForeground(new Color(0, 0, 0));
+            this.dark = false;
+        }
+    
+    }//GEN-LAST:event_darkModeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -193,6 +248,7 @@ public class Enter extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton darkMode;
     private javax.swing.JButton enterBtn;
     private javax.swing.JTextField ipText;
     private javax.swing.JLabel jLabel1;
