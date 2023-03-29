@@ -174,6 +174,8 @@ public class Interface extends javax.swing.JFrame {
             buffW.newLine();
             buffW.flush();
             this.msg.setText("");
+            Interface.textArea.setLineWrap(rootPaneCheckingEnabled);
+            Interface.textArea.setWrapStyleWord(rootPaneCheckingEnabled);
             Interface.textArea.setText(Interface.textArea.getText() + "Você: " + line + "\n");
         } catch (IOException e){
             //fechaCliente(, buffR, buffW);
