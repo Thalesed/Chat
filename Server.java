@@ -50,9 +50,6 @@ public class Server extends javax.swing.JFrame {
 
         ip.setFont(new java.awt.Font("Noto Sans Mono CJK HK", 0, 18)); // NOI18N
         ip.setText("IP: ");
-    private void delActionPerformed(java.awt.event.ActionEvent evt) {                                    
-        Interface.textArea.setText("");
-    }
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
