@@ -76,6 +76,11 @@ public class Interface extends javax.swing.JFrame {
         del.setBackground(new java.awt.Color(255, 0, 0));
         del.setFont(new java.awt.Font("Abyssinica SIL", 0, 18)); // NOI18N
         del.setText("Del");
+        del.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -162,6 +167,9 @@ public class Interface extends javax.swing.JFrame {
             Interface.portLabel.setForeground(new Color(0, 0, 0));
         }
     }
+     private void delActionPerformed(java.awt.event.ActionEvent evt) {                                    
+        Interface.textArea.setText("");
+    }      
     
     private void esperaLine() {
         new Thread(new Runnable(){
@@ -204,7 +212,9 @@ public class Interface extends javax.swing.JFrame {
                 
             }
         });
-    }
+    } private void delActionPerformed(java.awt.event.ActionEvent evt) {                                    
+        Interface.textArea.setText("");
+    }      
                   
     private javax.swing.JButton del;
     private static javax.swing.JLabel ipLabel;
