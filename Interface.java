@@ -212,9 +212,7 @@ public class Interface extends javax.swing.JFrame {
                 
             }
         });
-    } private void delActionPerformed(java.awt.event.ActionEvent evt) {                                    
-        Interface.textArea.setText("");
-    }      
+    }   
                   
     private javax.swing.JButton del;
     private static javax.swing.JLabel ipLabel;
