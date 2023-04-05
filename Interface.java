@@ -171,23 +171,6 @@ public class Interface extends javax.swing.JFrame {
         Interface.textArea.setText("");
     }      
     
-    private void esperaLine() {
-        new Thread(new Runnable(){
-            @Override
-            public void run(){
-                String line = "teste";
-                while(socket.isConnected()){
-                    try{
-                        line = buffR.readLine();
-                        textArea.setText(line);
-                        System.out.println(line);
-                    } catch (IOException e){
-                        //fechaCliente(cliente, buffR, buffW);
-                    }
-                }
-            }
-        }).start();
-    }
     
     public static void main(String args[]) {
       
