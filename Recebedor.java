@@ -1,6 +1,5 @@
 
 import java.io.InputStream;
-import java.util.Scanner;
 public class Recebedor implements Runnable {
     
    private InputStream servidor;
@@ -11,7 +10,6 @@ public class Recebedor implements Runnable {
  
    @Override
    public void run() {
-     Scanner s = new Scanner(this.servidor);
      while (s.hasNextLine()) {
          String line  = s.nextLine();
        System.out.println(line);
