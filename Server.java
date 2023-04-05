@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.mycompany.chat;
 
-/**
- *
- * @author alunos
- */
 import java.util.Enumeration;
 import java.io.IOException;
 import java.net.*;
@@ -58,7 +50,9 @@ public class Server extends javax.swing.JFrame {
 
         ip.setFont(new java.awt.Font("Noto Sans Mono CJK HK", 0, 18)); // NOI18N
         ip.setText("IP: ");
-
+    private void delActionPerformed(java.awt.event.ActionEvent evt) {                                    
+        Interface.textArea.setText("");
+    }
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
